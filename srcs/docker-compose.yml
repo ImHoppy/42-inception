@@ -2,8 +2,7 @@ version: '3.9'
 
 services:
   nginx:
-    containers
-    build: requirements/nginx
+    build: ./requirements/nginx
     image: web-server
     env_file: .env
     depends_on:
@@ -11,10 +10,10 @@ services:
     ports:
       - 443:443
     networks:
-      - inception
-  
+      - main
+
   wordpress:
-    build: requirements/wordpress
+    build: ./requirements/wordpress
     depends_on:
       - mariadb
     image: wordpress
@@ -23,20 +22,35 @@ services:
     volumes:
       - wp-data:/var/www/html
     networks:
-      - inception
+      - main
 
   mariadb:
-    build: requirements/mariadb
+    build: ./requirements/mariadb
     image: mariadb
     restart: unless-stopped
     env_file: .env
     volumes:
       - db-data:/var/lib/mysql
     networks:
-      - inception
+      - main
 
+#        ---------- VOLUMES -----------
 volumes:
   db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_DB_PATH}
+      o: bind
   wp-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_WP_PATH}
+      o: bind
+
+#         ---------- NETWORKS -----------
 networks:
-  inception:
+  main:
+    name: main
+    driver: bridge
