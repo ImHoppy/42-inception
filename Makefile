@@ -1,4 +1,9 @@
-DOCKER_FLAGS = -f srcs/docker-compose.yml
+DOCKER_NAME = inception
+DOCKER_FILE = srcs/docker-compose.yml
+
+
+
+DOCKER_FLAGS = -f ${DOCKER_FILE} -p ${DOCKER_NAME}
 
 all: build
 
@@ -12,7 +17,14 @@ stop:
 	docker compose ${DOCKER_FLAGS} stop
 clean:
 	docker compose ${DOCKER_FLAGS} rm -f
-fclean:
+fclean: clean
+	# Clean Docker Image
+	docker rmi -f nginx
+	docker rmi -f wordpress
+	docker rmi -f mariadb
+	# Clean Docker Containers
 	docker compose ${DOCKER_FLAGS} rm -v
+
+re: stop fclean all
 
 .PHONY: build start stop clean fclean
