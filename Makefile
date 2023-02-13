@@ -15,6 +15,8 @@ start:
 	docker compose ${DOCKER_FLAGS} start
 stop:
 	docker compose ${DOCKER_FLAGS} stop
+logs:
+	docker compose ${DOCKER_FLAGS} logs -f
 clean:
 	docker compose ${DOCKER_FLAGS} rm -f
 fclean: clean
