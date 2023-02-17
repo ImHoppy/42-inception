@@ -10,6 +10,8 @@ services:
       - wordpress
     ports:
       - 443:443
+    volumes:
+      - wp-data:/var/www/html
     networks:
       - main
 
