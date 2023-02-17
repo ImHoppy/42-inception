@@ -25,6 +25,10 @@ services:
       - wp-data:/var/www/html
     networks:
       - main
+    environment:
+      - WORDPRESS_DB_NAME=${MYSQL_DATABASE}
+      - WORDPRESS_DB_USER=${MYSQL_USER}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PASSWORD}
 
   mariadb:
     container_name: mariadb
