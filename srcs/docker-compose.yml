@@ -3,7 +3,10 @@ version: '3.9'
 services:
   nginx:
     container_name: nginx
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx
+      args:
+        - DOMAIN_NAME=${DOMAIN_NAME}
     image: nginx
     env_file: .env
     depends_on:
