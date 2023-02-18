@@ -40,5 +40,9 @@ RUN set -ex; \
 	wp --allow-root --version
 
 EXPOSE 9000
-USER www-data
-CMD ["php-fpm"]
+
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/entrypoint.sh /usr/bin/entrypoint.sh
+ENTRYPOINT ["sh", "/usr/bin/entrypoint.sh"]
+# -F : run in foreground
+CMD ["php-fpm81", "-F", "--allow-to-run-as-root", "-O"]
