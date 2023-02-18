@@ -3,4 +3,6 @@ FROM alpine:3.17.2
 RUN apk add --no-cache nginx;
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 443
-CMD ["nginx", "-g", "daemon off;"]
+COPY conf/entrypoint.sh /usr/bin/entrypoint.sh
+ENTRYPOINT ["sh", "/usr/bin/entrypoint.sh"]
+CMD ["nginx"]
