@@ -6,6 +6,8 @@ RUN set -ex; \
 	php81 \
 	php81-fpm \
 	php81-phar \
+	php81-openssl \
+	mariadb-client \
 	curl; \
 	adduser -u 82 -D -S -G www-data www-data; \
 	[ ! -d /var/www/html ]; \
