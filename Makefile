@@ -7,6 +7,8 @@ DOCKER_FLAGS = -f ${DOCKER_FILE} -p ${DOCKER_NAME}
 
 all: build
 
+dev:
+	docker compose ${DOCKER_FLAGS} up --build
 build:
 	docker compose ${DOCKER_FLAGS} up -d --build
 restart:
@@ -19,13 +21,13 @@ logs:
 	docker compose ${DOCKER_FLAGS} logs -f
 clean:
 	docker compose ${DOCKER_FLAGS} rm -f
-fclean: clean
+fclean:
 	# Clean Docker Image
 	docker rmi -f nginx
 	docker rmi -f wordpress
 	docker rmi -f mariadb
 	# Clean Docker Containers
-	docker compose ${DOCKER_FLAGS} rm -v
+	docker compose ${DOCKER_FLAGS} rm -sfv
 
 re: stop fclean all
 
