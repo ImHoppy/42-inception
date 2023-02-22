@@ -6,6 +6,7 @@
 
 # this is read by the standalone daemon and embedded servers
 [server]
+user=root
 
 # this is only for the mysqld standalone daemon
 [mysqld]
