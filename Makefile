@@ -2,14 +2,18 @@ DOCKER_NAME = inception
 DOCKER_FILE = srcs/docker-compose.yml
 
 
-
 DOCKER_FLAGS = -f ${DOCKER_FILE} -p ${DOCKER_NAME}
+
+include ./srcs/.env
+VOLUMES_DIR = $(VOLUME_WP_PATH) $(VOLUME_DB_PATH)
+make_dir:
+	mkdir -p $(VOLUMES_DIR)
 
 all: build
 
-dev:
+dev: make_dir
 	docker compose ${DOCKER_FLAGS} up --build
-build:
+build: make_dir
 	docker compose ${DOCKER_FLAGS} up -d --build
 restart:
 	docker compose ${DOCKER_FLAGS} restart
@@ -31,4 +35,5 @@ fclean:
 
 re: stop fclean all
 
+.DEFAULT_GOAL = all
 .PHONY: build start stop clean fclean
