@@ -1,5 +1,5 @@
 echo -e "\033[32;1m--------------- Waiting for mysql ---------------\033[0m"
-until mariadb-admin --host=$(getent hosts ${WORDPRESS_DB_HOST} | awk '{ print $1 }') --port=3306 --protocol=tcp --user=${WORDPRESS_DB_USER} -p${WORDPRESS_DB_PASSWORD} --silent ping; do
+until mariadb-admin --host=${WORDPRESS_DB_HOST} --user=${WORDPRESS_DB_USER} --password=${WORDPRESS_DB_PASSWORD} --silent ping; do
 	echo -e "\033[32;1m--------------- Mysql is down ---------------\033[0m"
 	sleep 4
 done
