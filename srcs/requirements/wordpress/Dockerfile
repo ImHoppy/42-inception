@@ -45,8 +45,8 @@ RUN set -ex; \
 
 EXPOSE 9000
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php81/php-fpm.d/www.conf
 COPY ./conf/entrypoint.sh /usr/bin/entrypoint.sh
 ENTRYPOINT ["sh", "/usr/bin/entrypoint.sh"]
 # -F : run in foreground
-CMD ["php-fpm81", "-F", "--allow-to-run-as-root", "-O"]
+CMD ["php-fpm81", "-F", "--allow-to-run-as-root", "--force-stderr"]
