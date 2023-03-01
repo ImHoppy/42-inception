@@ -7,9 +7,9 @@ until mariadb-admin --host="$WORDPRESS_DB_HOST" --user="$WORDPRESS_DB_USER" --pa
 done
 if [ ! -f "/var/www/html/wp-config.php" ]; then
 	printf "\033[32;1m--------------- Installing wordpress ---------------\033[0m"
-	wp core download --path=/var/www/html
+	wp --allow-root core download --path=/var/www/html
 
-	wp config create \
+	wp --allow-root config create \
 		--path=/var/www/html \
 		--dbname="$WORDPRESS_DB_NAME" \
 		--dbuser="$WORDPRESS_DB_USER" \
@@ -17,7 +17,7 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 		--dbhost="$WORDPRESS_DB_HOST" \
 		--dbprefix="$WORDPRESS_TABLE_PREFIX"
 
-	wp core install \
+	wp --allow-root core install \
 		--path=/var/www/html \
 		--url="$DOMAIN_NAME" \
 		--title="$WORDPRESS_TITLE" \
@@ -26,19 +26,19 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 		--admin_email="$WORDPRESS_ADMIN_EMAIL" \
 		--skip-email
 
-	wp user create \
+	wp --allow-root user create \
 		"$WORDPRESS_USER" \
 		"$WORDPRESS_USER_EMAIL" \
 		--role=author \
 		--user_pass="$WORDPRESS_USER_PASSWORD" \
 		--path=/var/www/html
 
-	wp plugin install \
+	wp --allow-root plugin install \
 		"$WORDPRESS_PLUGINS" \
 		--activate \
 		--path=/var/www/html
 
-	wp config set --add --raw --type=constant \
+	wp --allow-root config set --add --raw --type=constant \
 	--path=/var/www/html \
 	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
 
