@@ -1,5 +1,28 @@
 version: '3.9'
 
+#        ----------- VOLUMES -----------
+volumes:
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_DB_PATH}
+      o: bind
+  wp-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_WP_PATH}
+      o: bind
+
+#        ----------- NETWORKS -----------
+networks:
+  main:
+    name: main
+    driver: bridge
+
+
+#        ----------- SERVICES -----------
 services:
   nginx:
     container_name: nginx
@@ -45,24 +68,3 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - main
-
-#        ---------- VOLUMES -----------
-volumes:
-  db-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${VOLUME_DB_PATH}
-      o: bind
-  wp-data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${VOLUME_WP_PATH}
-      o: bind
-
-#         ---------- NETWORKS -----------
-networks:
-  main:
-    name: main
-    driver: bridge
