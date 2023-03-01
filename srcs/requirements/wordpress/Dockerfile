@@ -3,12 +3,7 @@ FROM alpine:3.17.2
 
 RUN set -ex; \
 	apk add --no-cache \
-	php81 \
-	php81-fpm \
-	php81-phar \
-	php81-openssl \
-	php81-mysqli \
-	php81-iconv \
+	$(apk search --no-cache -q 'php81-') \
 	mariadb-client \
 	curl; \
 	adduser -u 82 -D -S -G www-data www-data; \
