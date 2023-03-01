@@ -33,6 +33,15 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 		--user_pass="$WORDPRESS_USER_PASSWORD" \
 		--path=/var/www/html
 
+	wp plugin install \
+		"$WORDPRESS_PLUGINS" \
+		--activate \
+		--path=/var/www/html
+
+	wp config set --add --raw --type=constant \
+	--path=/var/www/html \
+	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
+
 	printf "\033[32;1m--------------- Wordpress installed ---------------\033[0m"
 else
 	printf "\033[32;1m--------------- Wordpress already installed ---------------\033[0m"
