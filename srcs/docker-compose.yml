@@ -68,3 +68,12 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - main
+#        -------- SERVICES BONUS --------
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    image: redis
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - main
