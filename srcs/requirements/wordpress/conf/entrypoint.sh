@@ -5,20 +5,23 @@ until mariadb-admin --host="$WORDPRESS_DB_HOST" --user="$WORDPRESS_DB_USER" --pa
 	printf "\033[32;1m--------------- Mysql is down ---------------\033[0m"
 	sleep 4
 done
+
+_wp() {
+	wp --allow-root --path=/var/www/html "$@"
+}
+
 if [ ! -f "/var/www/html/wp-config.php" ]; then
 	printf "\033[32;1m--------------- Installing wordpress ---------------\033[0m"
-	wp --allow-root core download --path=/var/www/html
+	_wp core download
 
-	wp --allow-root config create \
-		--path=/var/www/html \
+	_wp config create \
 		--dbname="$WORDPRESS_DB_NAME" \
 		--dbuser="$WORDPRESS_DB_USER" \
 		--dbpass="$WORDPRESS_DB_PASSWORD" \
 		--dbhost="$WORDPRESS_DB_HOST" \
 		--dbprefix="$WORDPRESS_TABLE_PREFIX"
 
-	wp --allow-root core install \
-		--path=/var/www/html \
+	_wp core install \
 		--url="$DOMAIN_NAME" \
 		--title="$WORDPRESS_TITLE" \
 		--admin_user="$WORDPRESS_ADMIN_USER" \
@@ -26,21 +29,26 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 		--admin_email="$WORDPRESS_ADMIN_EMAIL" \
 		--skip-email
 
-	wp --allow-root user create \
+	_wp user create \
 		"$WORDPRESS_USER" \
 		"$WORDPRESS_USER_EMAIL" \
 		--role=author \
 		--user_pass="$WORDPRESS_USER_PASSWORD" \
-		--path=/var/www/html
 
-	wp --allow-root plugin install \
+	_wp config set --add --raw --type=constant \
+	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
+
+	_wp config set --add --raw --type=constant \
+	"WP_CACHE" true
+
+	_wp config set --add --raw --type=constant \
+	"WP_REDIS_SCHEME" "tcp"
+
+	_wp plugin install \
 		"$WORDPRESS_PLUGINS" \
 		--activate \
-		--path=/var/www/html
 
-	wp --allow-root config set --add --raw --type=constant \
-	--path=/var/www/html \
-	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
+	_wp redis enable
 
 	printf "\033[32;1m--------------- Wordpress installed ---------------\033[0m"
 else
