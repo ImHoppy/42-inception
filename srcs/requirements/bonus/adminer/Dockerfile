@@ -22,4 +22,4 @@ ENV	ADMINER_VERSION 4.8.1
 ADD https://github.com/vrana/adminer/releases/download/v${ADMINER_VERSION}/adminer-${ADMINER_VERSION}.php /var/www/html/index.php
 
 EXPOSE 9000
-ENTRYPOINT [ "php81-fpm", "-F", "--force-stderr" ]
+ENTRYPOINT [ "php-fpm81", "-F", "--force-stderr" ]
