@@ -35,13 +35,13 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 		--role=author \
 		--user_pass="$WORDPRESS_USER_PASSWORD" \
 
-	_wp config set --add --raw --type=constant \
-	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
-
-	_wp config set --add --raw --type=constant \
+	_wp config set --add --type=constant \
 	"WP_CACHE" true
 
-	_wp config set --add --raw --type=constant \
+	_wp config set --add --type=constant \
+	"WP_REDIS_HOST" "$WORDPRESS_REDIS_HOST"
+
+	_wp config set --add --type=constant \
 	"WP_REDIS_SCHEME" "tcp"
 
 	_wp plugin install \
