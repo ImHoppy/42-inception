@@ -85,3 +85,13 @@ services:
     env_file: .env
     networks:
       - main
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    image: ftp
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - main
+    volumes:
+      - wp-data:/home/${FTP_USER}/
