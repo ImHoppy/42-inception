@@ -7,16 +7,18 @@ RUN set -ex; \
 	php81-session \
 	php81-mysqli
 
-RUN	addgroup -S adminer \
-&&	adduser -S -G adminer adminer \
-&&	mkdir -p /var/www/html \
-&&	chown -R adminer:adminer /var/www/html
+RUN set -ex; \
+	adduser -u 82 -D -S -G www-data www-data; \
+	[ ! -d /var/www/html ]; \
+	mkdir -p /var/www/html; \
+	chown www-data:www-data /var/www/html; \
+	chmod 777 /var/www/html;
 
 WORKDIR /var/www/html
 
 ENV	ADMINER_VERSION 4.8.1
 
-ADD https://github.com/vrana/adminer/releases/download/v${ADMINER_VERSION}/adminer-${ADMINER_VERSION}.php /var/www/html/index.php
+ADD --chown=www-data:www-data https://github.com/vrana/adminer/releases/download/v${ADMINER_VERSION}/adminer-${ADMINER_VERSION}.php /var/www/html/index.php
 
 COPY ./adminer.conf /etc/php81/php-fpm.d/www.conf
 
