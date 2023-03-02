@@ -1,8 +1,8 @@
 #!/bin/sh
 
-printf "\033[32;1m--------------- Waiting for mysql ---------------\033[0m"
+printf "\033[32;1m--------------- Waiting for mysql ---------------\033[0m\n"
 until mariadb-admin --host="$WORDPRESS_DB_HOST" --user="$WORDPRESS_DB_USER" --password="$WORDPRESS_DB_PASSWORD" --silent ping; do
-	printf "\033[32;1m--------------- Mysql is down ---------------\033[0m"
+	printf "\033[32;1m--------------- Mysql is down ---------------\033[0m\n"
 	sleep 4
 done
 
@@ -11,7 +11,7 @@ _wp() {
 }
 
 if [ ! -f "/var/www/html/wp-config.php" ]; then
-	printf "\033[32;1m--------------- Installing wordpress ---------------\033[0m"
+	printf "\033[32;1m--------------- Installing wordpress ---------------\033[0m\n"
 	_wp core download
 
 	_wp config create \
@@ -50,9 +50,9 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
 
 	_wp redis enable
 
-	printf "\033[32;1m--------------- Wordpress installed ---------------\033[0m"
+	printf "\033[32;1m--------------- Wordpress installed ---------------\033[0m\n"
 else
-	printf "\033[32;1m--------------- Wordpress already installed ---------------\033[0m"
+	printf "\033[32;1m--------------- Wordpress already installed ---------------\033[0m\n"
 fi
-printf "\033[32;1m--------------- Starting php-fpm ---------------\033[0m"
+printf "\033[32;1m--------------- Starting php-fpm ---------------\033[0m\n"
 exec "$@"
