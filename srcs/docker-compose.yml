@@ -77,3 +77,11 @@ services:
     env_file: .env
     networks:
       - main
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    image: adminer
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - main
