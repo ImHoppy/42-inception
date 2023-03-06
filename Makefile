@@ -5,7 +5,7 @@ DOCKER_FILE = srcs/docker-compose.yml
 DOCKER_FLAGS = -f ${DOCKER_FILE} -p ${DOCKER_NAME}
 
 include ./srcs/.env
-VOLUMES_DIR = $(VOLUME_WP_PATH) $(VOLUME_DB_PATH)
+VOLUMES_DIR = $(VOLUME_WP_PATH) $(VOLUME_DB_PATH) $(VOLUME_WORDLE_PATH)
 make_dir:
 	mkdir -p $(VOLUMES_DIR)
 

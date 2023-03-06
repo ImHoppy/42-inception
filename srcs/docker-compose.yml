@@ -14,6 +14,12 @@ volumes:
       type: none
       device: ${VOLUME_WP_PATH}
       o: bind
+  wordle-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_WORDLE_PATH}
+      o: bind
 
 #        ----------- NETWORKS -----------
 networks:
@@ -99,3 +105,13 @@ services:
       - main
     volumes:
       - wp-data:/home/${FTP_USER}/
+  wordle:
+    container_name: wordle
+    build: ./requirements/bonus/wordle
+    image: wordle
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - main
+    volumes:
+      - wordle-data:/var/www/html
