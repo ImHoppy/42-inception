@@ -117,3 +117,13 @@ services:
       - main
     volumes:
       - wordle-data:/var/www/html
+  cub3d:
+    container_name: cub3d
+    build: ./requirements/bonus/cub3d
+    image: cub3d
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - main
+    ports:
+      - 1977:1977
