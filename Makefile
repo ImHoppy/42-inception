@@ -17,15 +17,13 @@ build: make_dir
 	docker compose ${DOCKER_FLAGS} up -d --build
 restart:
 	docker compose ${DOCKER_FLAGS} restart
-start:
-	docker compose ${DOCKER_FLAGS} start
-stop:
-	docker compose ${DOCKER_FLAGS} stop
 logs:
 	docker compose ${DOCKER_FLAGS} logs -f
+down:
+	docker compose ${DOCKER_FLAGS} down
+fulldown:
+	docker compose ${DOCKER_FLAGS} down -t 3 --rmi all --volumes
 clean:
-	docker compose ${DOCKER_FLAGS} rm -f
-fclean:
 	# Clean Docker Image
 	docker rmi -f nginx
 	docker rmi -f wordpress
@@ -38,9 +36,10 @@ fullclean:
 	docker rm $(shell docker ps -qa)
 	docker rmi -f $(shell docker images -qa)
 	docker volume rm $(shell docker volume ls -q);
+	rm -rf $(VOLUMES_DIR)
 	docker network rm $(shell docker network ls -q) 2>/dev/null
 
-re: stop fclean all
+re: fulldown all
 
 .DEFAULT_GOAL = all
-.PHONY: build start stop clean fclean
+.PHONY: build clean fullclean down fulldown restart logs re
