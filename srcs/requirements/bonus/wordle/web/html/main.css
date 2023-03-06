@@ -10,7 +10,8 @@ body {
 
 .title {
 	text-align: center;
-	width: 350px;
+	width: 32.41vh;
+	font-size: 5vh;
 }
 
 .game {
@@ -25,53 +26,54 @@ body {
 	overflow: hidden;
 }
 .keyboard {
-	width: 500px;
+	width: 46.30vh;
 	display: flex;
 	flex-wrap: wrap;
 	position: absolute;
 	bottom: 0;
 }
 .keyboard button {
-	width: 40px;
-	height: 50px;
-	border-radius: 3px;
+	width: 3.70vh;
+	height: 4.63vh;
+	border-radius: 0.28vh;
 	border: none;
-	margin: 4px;
+	margin: 0.37vh;
 	background-color: #606060;
+	font-size: 1.5vh;
 }
 .keyboard button:active {
 	background-color: #3e8e41;
-	box-shadow: 0 1px #666;
-	transform: translateY(1px);
+	box-shadow: 0 0.09vh #666;
+	transform: translateY(0.09vh);
   }
 .keyboard button:hover {background-color: #595959}
 .keyboard button:nth-child(11) {
-	margin-left: 26px;
+	margin-left: 2.41vh;
 }
 .keyboard button:nth-child(20), .keyboard button:nth-child(28) {
-	width: 64px;
+	width: 5.93vh;
 }
 .keyboard button:nth-child(28) {
-	font-size: 40px;
-	padding-bottom: 5px;
+	font-size: 3.70vh;
+	padding-bottom: 0.46vh;
 }
 
 .tile {
-	width: 330px;
-	margin-bottom: 30px;
+	width: 30.56vh;
+	margin-bottom: 2.78vh;
 }
 .tile div {
 	display: flex;
 }
 .tile .words {
-	width: 62px;
-	height: 62px;
-	border: 2px solid #3a3a3c;
+	width: 5.74vh;
+	height: 5.74vh;
+	border: 0.19vh solid #3a3a3c;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 2px;
+	margin: 0.19vh;
 	font-weight: 1000;
 }
 
