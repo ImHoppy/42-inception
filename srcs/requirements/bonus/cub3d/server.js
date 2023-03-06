@@ -1,23 +1,24 @@
 var net = require('net');
 
 let C = {
-	Reset : "\x1b[0m",
-	Bright : "\x1b[1m",
-	Dim : "\x1b[2m",
-	Underscore : "\x1b[4m",
-	Blink : "\x1b[5m",
-	Reverse : "\x1b[7m",
-	Hidden : "\x1b[8m",
+	Reset: "\x1b[0m",
+	Bright: "\x1b[1m",
+	Dim: "\x1b[2m",
+	Underscore: "\x1b[4m",
+	Blink: "\x1b[5m",
+	Reverse: "\x1b[7m",
+	Hidden: "\x1b[8m",
 
-	Black : "\x1b[30m",
-	Red : "\x1b[31m",
-	Green : "\x1b[32m",
-	Yellow : "\x1b[33m",
-	Blue : "\x1b[34m",
-	Magenta : "\x1b[35m",
-	Cyan : "\x1b[36m",
-	White : "\x1b[37m",
+	Black: "\x1b[30m",
+	Red: "\x1b[31m",
+	Green: "\x1b[32m",
+	Yellow: "\x1b[33m",
+	Blue: "\x1b[34m",
+	Magenta: "\x1b[35m",
+	Cyan: "\x1b[36m",
+	White: "\x1b[37m",
 }
+const PORT = 1977;
 
 class Client {
 	constructor(socket) {
@@ -30,7 +31,6 @@ class Client {
 }
 
 var clients = [];
-
 function sendMessageToAllClients(message, author) {
 	for (var i = 0; i < clients.length; i++) {
 		if (author == null || clients[i].port != author.port) {
@@ -40,10 +40,10 @@ function sendMessageToAllClients(message, author) {
 	}
 }
 
-var server = net.createServer(function(socket) {
+var server = net.createServer(function (socket) {
 	if (clients.length >= 4)
-		return ;
-	console.log(C.Green+'Client connected: ' + socket.remoteAddress + ':' + socket.remotePort);
+		return;
+	console.log(C.Green + 'Client connected: ' + socket.remoteAddress + ':' + socket.remotePort);
 	let client = new Client(socket);
 	if (clients.length > 0) {
 		client.id = clients[clients.length - 1].id + 1;
@@ -52,7 +52,7 @@ var server = net.createServer(function(socket) {
 	}
 	clients.push(client);
 
-	socket.on('end', function() {
+	socket.on('end', function () {
 		clients.forEach((element, index) => {
 			if (element.port == socket.remotePort) {
 				clients.splice(index, 1);
@@ -63,10 +63,10 @@ var server = net.createServer(function(socket) {
 		clients.forEach((element, index) => {
 			element.id = index;
 		});
-		console.log(C.Red+'Client disconnected: ' + socket.remoteAddress + ':' + socket.remotePort);
+		console.log(C.Red + 'Client disconnected: ' + socket.remoteAddress + ':' + socket.remotePort);
 	});
 
-	socket.on('data', function(data) {
+	socket.on('data', function (data) {
 		// console.log(C.Cyan+`Client data ${client.id}: ${data}`);
 
 		if (clients.length > 1) {
@@ -81,8 +81,8 @@ var server = net.createServer(function(socket) {
 		}
 	});
 
-	socket.on("error", function(err) {
-		console.log(C.Yellow+'Client error: ' + err);
+	socket.on("error", function (err) {
+		console.log(C.Yellow + 'Client error: ' + err);
 
 		clients.forEach((element, index) => {
 			if (element.port == socket.remotePort) {
@@ -93,12 +93,12 @@ var server = net.createServer(function(socket) {
 		clients.forEach((element, index) => {
 			element.id = index;
 		});
-		console.log(C.Red+'Client disconnected: ' + socket.remoteAddress + ':' + socket.remotePort);
+		console.log(C.Red + 'Client disconnected: ' + socket.remoteAddress + ':' + socket.remotePort);
 	});
 
 	socket.write('w');
 	socket.pipe(socket);
-}).listen(1977, function() {
-	console.log('Server started');
+}).listen(PORT, function () {
+	console.log('Server started at port ' + PORT);
 });
 
