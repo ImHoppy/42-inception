@@ -99,6 +99,3 @@ services:
       - main
     volumes:
       - wp-data:/home/${FTP_USER}/
-    ports:
-      - 20:20
-      - 21:21
