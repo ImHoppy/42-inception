@@ -19,8 +19,12 @@ async function fetchAsync(url) {
 jQuery(document).ready(async function () {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
-
-	const listWords = (await fetchAsync(`words${urlParams.has('lang') ? '-' + urlParams.get('lang') : ''}.txt`)).split('\n').filter(el => {
+	const getLang = function (lang) {
+		if (!lang) return "";
+		if (lang === 'fr') return "-fr";
+		return "";
+	}
+	const listWords = (await fetchAsync(`words${getLang(urlParams.get('lang'))}.txt`)).split('\n').filter(el => {
 		return el != "" && el.length == 5 && /^[a-zA-Z]+$/.test(el);
 	});
 	const tile = $(".tile");
